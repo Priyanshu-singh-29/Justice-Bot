@@ -1,0 +1,323 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --navy-900: #0a0f1c;
+  --navy-800: #0f172a;
+  --navy-700: #1e293b;
+  --navy-600: #334155;
+  --gold-500: #d4a853;
+  --gold-400: #e8c46c;
+  --gold-600: #b8941d;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--navy-900);
+  color: #e2e8f0;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--navy-800);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--navy-600);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-500);
+}
+
+/* Gold gradient text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #d4a853 0%, #f0d78c 50%, #d4a853 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass effect */
+.glass {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 168, 83, 0.1);
+}
+
+.glass-card {
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 168, 83, 0.15);
+}
+
+/* Glow effects */
+.glow-gold {
+  box-shadow: 0 0 20px rgba(212, 168, 83, 0.3);
+}
+
+.glow-blue {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Animation classes */
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 5px rgba(212, 168, 83, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(212, 168, 83, 0.6); }
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 2s ease-in-out infinite;
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.scan-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d4a853, transparent);
+  animation: scan 2s linear infinite;
+}
+
+/* Network graph styles */
+.node {
+  transition: all 0.3s ease;
+}
+
+.node:hover {
+  filter: drop-shadow(0 0 8px rgba(212, 168, 83, 0.5));
+  transform: scale(1.1);
+}
+
+.edge {
+  stroke-dasharray: 5;
+  animation: dash 20s linear infinite;
+}
+
+@keyframes dash {
+  to { stroke-dashoffset: -100; }
+}
+
+/* Timeline styles */
+.timeline-line {
+  background: linear-gradient(180deg, #d4a853 0%, #3b82f6 100%);
+}
+
+/* Input styles */
+.input-legal {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(212, 168, 83, 0.3);
+  color: #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.input-legal:focus {
+  border-color: #d4a853;
+  box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.2);
+  outline: none;
+}
+
+/* Button styles */
+.btn-gold {
+  background: linear-gradient(135deg, #d4a853 0%, #b8941d 100%);
+  color: #0a0f1c;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(212, 168, 83, 0.4);
+}
+
+.btn-outline-gold {
+  border: 1px solid #d4a853;
+  color: #d4a853;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-gold:hover {
+  background: rgba(212, 168, 83, 0.1);
+  box-shadow: 0 0 20px rgba(212, 168, 83, 0.2);
+}
+
+/* Confidence score rings */
+.confidence-ring {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.confidence-ring svg {
+  transform: rotate(-90deg);
+}
+
+.confidence-ring circle {
+  fill: none;
+  stroke-width: 4;
+}
+
+.confidence-ring .bg {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.confidence-ring .progress {
+  stroke: url(#goldGradient);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease;
+}
+
+/* 
+ * Magical Grid Dot Reveal Effect
+ * Creates a static dot grid and illuminates it via radial mask following cursor
+ */
+.dot-pattern-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1.5px);
+  background-size: 30px 30px;
+  
+  /* Mask it so it only shows within X pixels of the mouse */
+  -webkit-mask-image: radial-gradient(350px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), black 10%, transparent 100%);
+  mask-image: radial-gradient(350px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), black 10%, transparent 100%);
+  transition: -webkit-mask-image 0.1s ease-out, mask-image 0.1s ease-out;
+}
+
+/* ----------------------------------------------------
+ * GLAMOROUS LIGHT MODE OVERRIDES
+ * ---------------------------------------------------- */
+
+/* Base Canvas & Typography */
+.light-mode body {
+  background-color: #f8fafc;
+  color: #111827;
+}
+
+/* Deepen the gold gradient on light backgrounds to prevent washing out */
+.light-mode .text-gold-gradient {
+  background: linear-gradient(135deg, #b8941d 0%, #d4a853 50%, #997818 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Dotted Mask Tracker */
+.light-mode .dot-pattern-overlay {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.15) 1px, transparent 1.5px);
+}
+
+/* Text Mapping: Dark to Light Inversions */
+.light-mode .text-slate-100,
+.light-mode .text-slate-200,
+.light-mode .text-slate-300 {
+  color: #111827 !important;
+}
+
+.light-mode .text-slate-400 {
+  color: #4b5563 !important;
+}
+
+.light-mode .text-slate-500 {
+  color: #6b7280 !important;
+}
+
+/* Dynamic Tailwind Colors Optimization (amber and blue adjustments) */
+.light-mode .text-amber-400,
+.light-mode .text-amber-500\/20,
+.light-mode .text-emerald-400,
+.light-mode .text-blue-400,
+.light-mode .text-purple-400 {
+  filter: brightness(0.6) saturate(1.5);
+}
+
+.light-mode .bg-amber-500\/10 {
+  background-color: rgba(212, 168, 83, 0.15) !important;
+  border-color: rgba(212, 168, 83, 0.3) !important;
+}
+.light-mode .bg-amber-500\/20 {
+  background-color: rgba(212, 168, 83, 0.25) !important;
+}
+
+/* Section Backgrounds */
+.light-mode .bg-slate-950,
+.light-mode .bg-slate-900 {
+  background-color: #f8fafc !important;
+}
+
+.light-mode .bg-slate-900\/50,
+.light-mode .bg-slate-800\/50 {
+  background: linear-gradient(180deg, #f1f5f9 0%, #f8fafc 100%) !important;
+  border-top: 1px solid rgba(0,0,0,0.03);
+  border-bottom: 1px solid rgba(0,0,0,0.03);
+}
+
+.light-mode .bg-gradient-to-b.from-amber-500\/5 {
+  background: linear-gradient(to bottom, rgba(212, 168, 83, 0.08) 0%, transparent 100%) !important;
+}
+
+/* Premium White Cards with Soft Float Shadows */
+.light-mode .glass-card {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05), 0 2px 5px -2px rgba(0, 0, 0, 0.03) !important;
+  color: #111827;
+  transition: all 0.3s ease;
+}
+
+.light-mode .glass-card:hover {
+  transform: translateY(-4px);
+  border-color: #d4a853 !important;
+  box-shadow: 0 12px 25px -5px rgba(212, 168, 83, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+}
+
+.light-mode .glass {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid #e5e7eb !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.03);
+}
+
+/* Borders */
+.light-mode .border-slate-800,
+.light-mode .border-slate-700,
+.light-mode .border-white\/5 {
+  border-color: #e5e7eb !important;
+}
+
+/* Forms & Inputs */
+.light-mode .input-legal {
+  background: #ffffff !important;
+  border-color: #d1d5db !important;
+  color: #111827 !important;
+}
+
+.light-mode .input-legal:focus {
+  border-color: #d4a853 !important;
+  box-shadow: 0 0 0 3px rgba(212, 168, 83, 0.2);
+}
